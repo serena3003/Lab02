@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		System.out.println("First commit");
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Alien.fxml"));
 			Scene scene = new Scene(root);
