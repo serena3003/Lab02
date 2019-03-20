@@ -19,14 +19,6 @@ public class AlienController {
 	
 	private AlienModel model; 
 
-    public AlienModel getModel() {
-		return model;
-	}
-
-	public void setModel(AlienModel model) {
-		this.model = model;
-	}
-
 	@FXML
     private ResourceBundle resources;
 
@@ -47,11 +39,24 @@ public class AlienController {
 
     @FXML
     void doReset(ActionEvent event) {
-
+    	txtWord.clear();
+    	txtResult.clear();
+    	model.reset();
     }
 
     @FXML
     void handleTranslate(ActionEvent event) {
+    	
+    	String s = txtWord.getText();
+    	String[] words = s.split(" ");
+    	
+    	if (words.length==2) {
+    		model.addToMap(words);
+    		txtWord.clear();
+    	} else {
+    		String res = model.searchWord(words);
+    		txtResult.appendText(res);
+    	}
 
     }
 
@@ -63,4 +68,12 @@ public class AlienController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Alien.fxml'.";
 
     }
+    
+    public AlienModel getModel() {
+		return model;
+	}
+
+	public void setModel(AlienModel model) {
+		this.model = model;
+	}
 }
