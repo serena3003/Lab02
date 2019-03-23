@@ -7,6 +7,8 @@ package it.polito.tdp.alien;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import it.polito.tdp.alien.model.AlienModel;
 import javafx.event.ActionEvent;
@@ -50,15 +52,55 @@ public class AlienController {
     	String s = txtWord.getText();
     	String[] words = s.split(" ");
     	
-    	if (words.length==2) {
+    	//int i = model.testoValido(s);
+    	//System.out.println(i);
+    	if(!model.testoValido(s)) {
+    		txtResult.appendText("Testo non valido\n");
+    		txtWord.clear();
+    	} else {
+    		String res = model.AnalisiTesto(words);
+    		if(res==null) {
+    			txtResult.appendText("Parola non presente nel dizionario \n");
+    			txtWord.clear();
+    		}
+    		else if(res==words[0]) {
+    			txtResult.appendText("Parola inserita nel dizionario \n");
+    			txtWord.clear();
+    		}
+    		else {
+    			txtResult.appendText(res+"\n");
+    			txtWord.clear();
+    		}
+    	}
+    	
+    	/*Pattern p=Pattern.compile("[a-zA-Z]*|[a-zA-Z]* [a-zA-Z]*");
+    	Matcher m = p.matcher(s);
+		if(!m.matches()) {
+			txtResult.appendText("Testo non valido\n");
+			throw new NumberFormatException();
+		} else {
+			txtResult.appendText("FINALMENTEEE\n");
+		}
+    	for (String w : words){
+    		System.out.println(w+"\n");
+    		Matcher m = p.matcher(w);
+    		if(!m.matches()) {
+    			txtResult.appendText("Testo non valido\n");
+    			throw new NumberFormatException();
+    		}*/
+    		
+    	
+    	
+    	/*if (words.length==2) {
     		model.addToMap(words);
     		txtWord.clear();
     	} else {
     		String res = model.searchWord(words);
     		txtResult.appendText(res);
+    	}*/
     	}
 
-    }
+    //}
 
     @FXML
     void initialize() {
@@ -66,6 +108,7 @@ public class AlienController {
         assert btnTranslate != null : "fx:id=\"btnTranslate\" was not injected: check your FXML file 'Alien.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Alien.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Alien.fxml'.";
+        
 
     }
     
